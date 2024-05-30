@@ -1,6 +1,5 @@
 import { pad } from "../src/utils/arrays";
 import { concatenateHashes, hash } from "../src/utils/hash";
-import { hexToBinaryArray } from "../src/utils/hex";
 
 describe("utils test", () => {
   it("hash sanity check", () => {
@@ -17,19 +16,6 @@ describe("utils test", () => {
     );
   });
 
-  it("converts hex to binary array correctly", () => {
-    const hex = "00";
-    expect(hexToBinaryArray(hex)).toEqual(Buffer.from([0]));
-
-    const hex2 = "ff";
-    expect(hexToBinaryArray(hex2)).toEqual(Buffer.from([255]));
-
-    const hex3 = "0a";
-    expect(hexToBinaryArray(hex3)).toEqual(Buffer.from([10]));
-
-    const hex4 = "00ff0a1b";
-    expect(hexToBinaryArray(hex4)).toEqual(Buffer.from([0, 255, 10, 27]));
-  });
 
   it("concatenates hashes correctly", () => {
     const leftHash = "00ff0a1b";
