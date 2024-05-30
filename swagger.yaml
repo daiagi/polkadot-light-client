@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: LightClient API
+  version: 1.0.0
+  description: API documentation for the LightClient
+servers:
+  - url: http://localhost:3000
+paths:
+  /headers:
+    get:
+      summary: Get the latest headers
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: Limit the number of headers returned
+      responses:
+        "200":
+          description: Latest headers
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Header"
+        "500":
+          description: Error fetching headers
+  /headers/hash/{hash}:
+    get:
+      summary: Get header by hash
+      parameters:
+        - in: path
+          name: hash
+          schema:
+            type: string
+          required: true
+          description: Hash of the header
+      responses:
+        "200":
+          description: Header object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  header:
+                    $ref: "#/components/schemas/Header"
+                  headerHash:
+                    type: string
+        "404":
+          description: Header not found
+  /headers/blockNumber/{blockNumber}:
+    get:
+      summary: Get header by block number
+      parameters:
+        - in: path
+          name: blockNumber
+          schema:
+            type: integer
+          required: true
+          description: Block number of the header
+      responses:
+        "200":
+          description: Header object
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  header:
+                    $ref: "#/components/schemas/Header"
+                  headerHash:
+                    type: string
+        "404":
+          description: Header not found
+  /headers/hash/{hash}/proof:
+    get:
+      summary: Get proof for header by hash
+      parameters:
+        - in: path
+          name: hash
+          schema:
+            type: string
+          required: true
+          description: Hash of the header
+      responses:
+        "200":
+          description: Proof object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Proof"
+        "404":
+          description: Header not found
+        "500":
+          description: Proof not yet available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  time_unil_ready:
+                    type: string
+  /headers/blockNumber/{blockNumber}/proof:
+    get:
+      summary: Get proof for header by block number
+      parameters:
+        - in: path
+          name: blockNumber
+          schema:
+            type: integer
+          required: true
+          description: Block number of the header
+      responses:
+        "200":
+          description: Proof object
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Proof"
+        "404":
+          description: Header not found
+        "500":
+          description: Proof not yet available
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  time_unil_ready:
+                    type: string
+  /validateProof:
+    post:
+      summary: Validate proof for a header
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                headerHash:
+                  type: string
+                blockNumber:
+                  type: integer
+                proof:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                      value:
+                        type: string
+      responses:
+        "200":
+          description: Validation result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  isValid:
+                    type: boolean
+        "404":
+          description: Header not found
+components:
+  schemas:
+    Proof:
+      type: array
+      items:
+        type: object
+        properties:
+          type:
+            type: string
+          value:
+            type: string
+    Header:
+      type: object
+      properties:
+        parentHash:
+          type: string
+        stateRoot:
+          type: string
+        extrinsicsRoot:
+          type: string
+        number:
+          type: integer
+        digest:
+          $ref: "#/components/schemas/Digest"
+    Digest:
+      type: object
+      properties:
+        logs:
+          type: array
+          items:
+            type: object
+            properties:
+              preRuntime:
+                type: array
+                items:
+                  type: string
+              consensus:
+                type: array
+                items:
+                  type: string
+              seal:
+                type: array
+                items:
+                  type: string

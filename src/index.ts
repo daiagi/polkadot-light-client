@@ -6,6 +6,7 @@ function main() {
   const wsProvider = new WsProvider("wss://rpc.polkadot.io");
   const api = new ApiPromise({ provider: wsProvider });
 
+
     const lightClient = new LightClient (api, 10);
     lightClient.init();
 }
