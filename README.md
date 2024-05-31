@@ -46,3 +46,5 @@ The client provides a simple REST API to interact with the Polkadot network. The
 }
 ```
 
+
+https://github.com/OWNER/REPOSITORY/actions/workflows/test.yaml/badge.svg
