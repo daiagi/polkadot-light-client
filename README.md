@@ -1,8 +1,4 @@
-# Project Name
-
-Polkadot Block Header Light Client
-
-## Description
+# Polkadot Block Header Light Client
 
 A light client for the Polkadot network, specifically designed to manage and verify block headers. The client listens for new headers from the Polkadot main network, batches them, and stores them in a Merkle tree to ensure efficient and secure data management. Key functionalities include querying headers by block number or hash, generating Merkle inclusion proofs for each header, and validating these proofs to confirm the integrity and authenticity of data. This system is tailored for environments that demand high security and accurate data validation without the need for full blockchain node resources.
 
