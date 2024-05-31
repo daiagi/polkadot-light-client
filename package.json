@@ -1,15 +1,14 @@
 {
   "name": "polkadot-light-client",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A light client for the Polkadot network, specifically designed to manage and verify block headers. The client listens for new headers from the Polkadot main network, batches them, and stores them in a Merkle tree to ensure efficient and secure data management. Key functionalities include querying headers by block number or hash, generating Merkle inclusion proofs for each header, and validating these proofs to confirm the integrity and authenticity of data.",
+  "main": "/server/server.ts",
   "scripts": {
     "test": "jest",
     "start": "ts-node src/server/server.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Baruch Fishman",
+  "license": "MIT",
   "dependencies": {
     "@polkadot/api": "^11.1.1",
     "crypto-js": "^4.2.0",
