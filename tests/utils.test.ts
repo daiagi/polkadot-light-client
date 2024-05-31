@@ -16,7 +16,6 @@ describe("utils test", () => {
     );
   });
 
-
   it("concatenates hashes correctly", () => {
     const leftHash = "00ff0a1b";
     const rightHash = "01020304";
@@ -39,6 +38,61 @@ describe("utils test", () => {
     expect(pad(hashes2)).toEqual(["1", "2", "3", "4", "5", "0", "0", "0"]);
 
     // should pad unitl 16
-    expect(pad(hashes3)).toEqual(["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "0", "0", "0", "0", "0", "0"]);
-});
+    expect(pad(hashes3)).toEqual([
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+      "0",
+    ]);
+  });
+
+  it("concatenates hashes correctly", () => {
+    const leftHash = "00ff0a1b";
+    const rightHash = "01020304";
+
+    const expectedConcatenatedHash = hash(
+      Buffer.concat([Buffer.from([0, 255, 10, 27]), Buffer.from([1, 2, 3, 4])])
+    );
+
+    expect(concatenateHashes(leftHash, rightHash)).toBe(
+      expectedConcatenatedHash
+    );
+  });
+
+  it("not semtrical to order", () => {
+    const leftHash = "00ff0a1b";
+    const rightHash = "01020304";
+
+    const expectedConcatenatedHash = hash(
+      Buffer.concat([Buffer.from([0, 255, 10, 27]), Buffer.from([1, 2, 3, 4])])
+    );
+
+    expect(concatenateHashes(leftHash, rightHash)).toBe(
+      expectedConcatenatedHash
+    );
+    expect(concatenateHashes(rightHash, leftHash)).not.toBe(
+      expectedConcatenatedHash
+    );
+
+    expect(concatenateHashes(rightHash, leftHash)).toBe(
+      hash(
+        Buffer.concat([
+          Buffer.from([1, 2, 3, 4]),
+          Buffer.from([0, 255, 10, 27]),
+        ])
+      )
+    );
+  });
 });

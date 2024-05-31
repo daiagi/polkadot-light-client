@@ -1,5 +1,6 @@
 import { MerkleTree } from "../src/merkleTree/MerkleTree";
 import { MerkleProof, Sibling } from "../src/merkleTree/SiblingNode";
+import { Hash } from "../src/utils/hash";
 
 describe("merkle tree test", () => {
   let merkleTree: MerkleTree;
@@ -151,5 +152,77 @@ describe("merkle tree test", () => {
     expect(
       merkleTree.validateProof(root, "01", merkleTree.getProof("02"))
     ).toBe(false);
+  });
+});
+
+describe("MerkleTree", () => {
+  let tree: MerkleTree;
+  const hashes = ["01", "02", "03", "04"].map((h) => h as Hash);
+  const rootHash =
+    "bed3d33a81026f7be93aefad44c5891c27fc8265aa15279a58e287744b7c7753" as Hash;
+
+  beforeAll(() => {
+    tree = new MerkleTree(hashes);
+  });
+
+  describe("validateProof", () => {
+    it("should validate correct proof", () => {
+      const proof: MerkleProof = [
+        { type: Sibling.RIGHT, value: "02" as Hash },
+        {
+          type: Sibling.RIGHT,
+          value:
+            "0ce3940bebf2b22a5d2108ecf0c368a0541c7e3c45703f8540921b4eafc82947" as Hash,
+        },
+      ];
+      expect(tree.validateProof(rootHash, "01" as Hash, proof)).toBe(true);
+    });
+
+    it("should return false for wrong proof (wrong hash)", () => {
+      const proof: MerkleProof = [
+        { type: Sibling.RIGHT, value: "02" as Hash },
+        {
+          type: Sibling.RIGHT,
+          value:
+            "0ce3940bebf2b22a5d2108ecf0c368a0541c7e3c45703f8540921b4eafc82947" as Hash,
+        },
+      ];
+      expect(tree.validateProof(rootHash, "05" as Hash, proof)).toBe(false);
+    });
+
+    it("should return false for wrong proof (wrong side)", () => {
+      const proof: MerkleProof = [
+        { type: Sibling.LEFT, value: "02" as Hash },
+        {
+          type: Sibling.RIGHT,
+          value:
+            "0ce3940bebf2b22a5d2108ecf0c368a0541c7e3c45703f8540921b4eafc82947" as Hash,
+        },
+      ];
+      expect(tree.validateProof(rootHash, "01" as Hash, proof)).toBe(false);
+    });
+
+    it("should return false for too short proof", () => {
+      const proof: MerkleProof = [{ type: Sibling.RIGHT, value: "02" as Hash }];
+      expect(tree.validateProof(rootHash, "01" as Hash, proof)).toBe(false);
+    });
+
+    it("should return false for empty proof", () => {
+      const proof: MerkleProof = [];
+      expect(tree.validateProof(rootHash, "01" as Hash, proof)).toBe(false);
+    });
+
+    it("should return false for wrong root", () => {
+      const proof: MerkleProof = [
+        { type: Sibling.RIGHT, value: "02" as Hash },
+        {
+          type: Sibling.RIGHT,
+          value:
+            "0ce3940bebf2b22a5d2108ecf0c368a0541c7e3c45703f8540921b4eafc82947" as Hash,
+        },
+      ];
+      const wrongRoot = "1234567890abcdef" as Hash;
+      expect(tree.validateProof(wrongRoot, "01" as Hash, proof)).toBe(false);
+    });
   });
 });

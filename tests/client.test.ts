@@ -124,7 +124,7 @@ describe("LightClient", () => {
 
     expect(tree).toBeInstanceOf(MerkleTree);
     expect(tree.getRoot()).toBe(
-      "2dba5dbc339e7316aea2683faf839c1b7b1ee2313db792112588118df066aa35"
+      "19783e25191876e4880a29b247d2d62cb1f4a23f559e20c6e16513f2533111b0"
     );
     expect(tree.getTree().length).toEqual(3);
     expect(tree.getTree()[2]).toEqual(["0x123", "0x456", "0x789", "0xabc"]);
@@ -169,7 +169,7 @@ describe("LightClient", () => {
       {
         type: Sibling.RIGHT,
         value:
-          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "05e354551e85103e0722f0ec77048d2070d007e963ee5a56b99e76543588e124",
       }, // Mocked concatenated hash
     ];
 
@@ -182,7 +182,7 @@ describe("LightClient", () => {
       {
         type: Sibling.RIGHT,
         value:
-          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "05e354551e85103e0722f0ec77048d2070d007e963ee5a56b99e76543588e124",
       }, // Mocked concatenated hash
     ];
 
