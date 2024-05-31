@@ -1,6 +1,5 @@
-# Project Name
+# Polkadot Block Header Light Client
 
-Polkadot Block Header Light Client
 
 ## Description
 
