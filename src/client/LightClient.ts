@@ -32,9 +32,9 @@ export class LightClient {
   // listenToNewHeaders subscribes to new headers and processes them
   private async listenToNewHeaders() {
     this.api.rpc.chain.subscribeNewHeads(async (lastHeader: Header) => {
-      console.log("📦 block #:", lastHeader.number.toNumber());
-      console.log("🪖 header hash:", lastHeader.hash.toHex());
-      console.log("");
+      // console.log("📦 block #:", lastHeader.number.toNumber());
+      // console.log("🪖 header hash:", lastHeader.hash.toHex());
+      // console.log("");
 
       const headerHash = lastHeader.hash.toHex();
 
