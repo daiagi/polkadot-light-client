@@ -94,20 +94,26 @@ const startServer = async () => {
   );
 
   app.post("/validateProof", (req: ValidateProofRequest, res) => {
-    const { proof, headerHash, blockNumber } = req.body;
+    const { identifierType, proof } = req.body;
+
+    if (!proof) {
+      return res.status(400).send("Proof is required");
+    }
 
     let header;
-    if (headerHash) {
-      header = lightClient.getHeaderByHash(headerHash);
-    } else if (blockNumber) {
-      header = lightClient.getHeaderByBlockNumber(blockNumber);
+    switch (identifierType) {
+      case "headerHash":
+        header = lightClient.getHeaderByHash(req.body.headerHash);
+        break;
+      case "blockNumber":
+        header = lightClient.getHeaderByBlockNumber(req.body.blockNumber);
+        break;
+      default:
+        return res.status(400).send("Invalid identifier type");
     }
 
     if (!header) {
       return res.status(404).send("Header not found");
-    }
-    if (!proof) {
-      return res.status(400).send("Proof is required");
     }
 
     const isValid = lightClient.validateProof(header, proof);

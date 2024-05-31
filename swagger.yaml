@@ -136,27 +136,20 @@ paths:
                     type: string
   /validateProof:
     post:
-      summary: Validate proof for a header
+      summary: Validate proof for a header identified by hash or block number
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              type: object
-              properties:
-                headerHash:
-                  type: string
-                blockNumber:
-                  type: integer
-                proof:
-                  type: array
-                  items:
-                    type: object
-                    properties:
-                      type:
-                        type: string
-                      value:
-                        type: string
+              oneOf:
+                - $ref: "#/components/schemas/HeaderHashRequest"
+                - $ref: "#/components/schemas/BlockNumberRequest"
+              discriminator:
+                propertyName: identifierType
+                mapping:
+                  headerHash: "#/components/schemas/HeaderHashRequest"
+                  blockNumber: "#/components/schemas/BlockNumberRequest"
       responses:
         "200":
           description: Validation result
@@ -213,3 +206,31 @@ components:
                 type: array
                 items:
                   type: string
+    HeaderHashRequest:
+      type: object
+      required:
+        - identifierType
+        - headerHash
+        - proof
+      properties:
+        identifierType:
+          type: string
+          enum: [headerHash]
+        headerHash:
+          type: string
+        proof:
+          $ref: "#/components/schemas/Proof"
+    BlockNumberRequest:
+      type: object
+      required:
+        - identifierType
+        - blockNumber
+        - proof
+      properties:
+        identifierType:
+          type: string
+          enum: [blockNumber]
+        blockNumber:
+          type: integer
+        proof:
+          $ref: "#/components/schemas/Proof"
