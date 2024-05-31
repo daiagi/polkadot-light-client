@@ -140,9 +140,6 @@ export class MerkleTree {
           : concatenateHashes(currentHash, sibling.value);
     }
 
-    console.log("currentHash", currentHash);
-    console.log("root", root);
-
     return currentHash === root;
   }
 }
