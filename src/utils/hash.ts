@@ -8,5 +8,14 @@ export const hash = (data: BinaryLike, algo = "sha256"): Hash => {
   return hasher.digest("hex");
 };
 
-export const concatenateHashes = (left: Hash, right: Hash): Hash =>
-  hash(Buffer.concat([Buffer.from(left, "hex"), Buffer.from(right, 'hex')]));
+export const concatenateHashes = (left: Hash, right: Hash): Hash => {
+  return hash(Buffer.concat([hexToBuffer(left), hexToBuffer(right)]));
+};
+
+const hexToBuffer = (hex: string): Buffer => {
+  //clean 0x from start if exists
+  if (hex.startsWith("0x")) {
+    hex = hex.slice(2);
+  }
+  return Buffer.from(hex, "hex");
+};
