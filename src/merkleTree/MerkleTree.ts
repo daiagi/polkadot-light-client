@@ -67,7 +67,7 @@ export class MerkleTree {
     if (index >= treeLevel.length) {
       throw new Error("Invalid index");
     }
-    return this.tree[level][index - 1];
+    return treeLevel[index - 1];
   }
 
   public rightSibling(level: number, index: number): Hash {
@@ -79,7 +79,7 @@ export class MerkleTree {
     if (index >= treeLevel.length) {
       throw new Error("Invalid index");
     }
-    return this.tree[level][index + 1];
+    return treeLevel[index + 1];
   }
 
   private isLeftNode(index: number): boolean {
