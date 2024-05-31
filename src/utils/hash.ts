@@ -7,11 +7,6 @@ export const hash = (data: BinaryLike, algo = "sha256"): Hash => {
   hasher.update(data);
   return hasher.digest("hex");
 };
-
-export const concatenateHashes = (left: Hash, right: Hash): Hash => {
-  return hash(Buffer.concat([hexToBuffer(left), hexToBuffer(right)]));
-};
-
 const hexToBuffer = (hex: string): Buffer => {
   //clean 0x from start if exists
   if (hex.startsWith("0x")) {
@@ -19,3 +14,9 @@ const hexToBuffer = (hex: string): Buffer => {
   }
   return Buffer.from(hex, "hex");
 };
+
+export const concatenateHashes = (left: Hash, right: Hash): Hash => {
+  return hash(Buffer.concat([hexToBuffer(left), hexToBuffer(right)]));
+};
+
+
