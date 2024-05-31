@@ -106,6 +106,9 @@ const startServer = async () => {
     if (!header) {
       return res.status(404).send("Header not found");
     }
+    if (!proof) {
+      return res.status(400).send("Proof is required");
+    }
 
     const isValid = lightClient.validateProof(header, proof);
     res.json({ isValid });
