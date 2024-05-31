@@ -29,7 +29,7 @@ The client provides a simple REST API to interact with the Polkadot network. The
 - GET `/headers/blockNumber/:blockNumber/proof` Get Merkle inclusion proof for block header by block number
 - GET `/headers/hash/:hash/proof` Get Merkle inclusion proof for block header by block hash
 
-- POST /validateProof: Verify Merkle inclusion proof for block header
+- POST `/validateProof` Verify Merkle inclusion proof for block header
 
 * POST request body example:
 ```json
