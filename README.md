@@ -8,8 +8,9 @@ A light client for the Polkadot network, specifically designed to manage and ver
 
 ## How to Start
 
-To get started with this project, run the following commands in your terminal:
-
+1. Clone this repo
+2. Change into the directory of the cloned repository
+3. run the following commands in your terminal:
 ```bash
 npm install
 npm run start
