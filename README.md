@@ -20,7 +20,7 @@ the local server will start at http://localhost:3000
 
 ## How to Use
 
-swgger documentation is available at http://localhost:3000/api-docs
+swagger documentation is available at http://localhost:3000/api-docs
 
 The client provides a simple REST API to interact with the Polkadot network. The following endpoints are available:
 
