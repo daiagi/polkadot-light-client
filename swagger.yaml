@@ -4,6 +4,7 @@ info:
   version: 1.0.0
   description: API documentation for the LightClient
 servers:
+  - url: http://52.77.228.78:3000
   - url: http://localhost:3000
 paths:
   /headers:
