@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: API documentation for the LightClient
 servers:
-  - url: http://ecs-in-appli-f1p8uieyfw1v-94977798.ap-southeast-1.elb.amazonaws.com
+  - url: http://ecs-in-appli-f1p8uieyfw1v-94977798.ap-southeast-1.elb.amazonaws.com/client
   - url: http://localhost:3000
 paths:
   /headers:
