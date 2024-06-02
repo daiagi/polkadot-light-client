@@ -31,9 +31,14 @@ const startServer = async () => {
   app.use(express.json());
   app.use(validateClient(lightClient));
 
-  setupSwagger(app); // Setup Swagger
+  const clientRouter = express.Router();
+  setupSwagger(clientRouter); // Setup Swagger
 
-  app.get("/headers", (req, res) => {
+  clientRouter.get("/", (req, res) => {
+    res.send("Polkadot Light Client API Server is running!\n see /client/api-docs for API documentation");
+  })
+  
+  clientRouter.get("/headers", (req, res) => {
     const limit = req.query.limit as string;
     try {
       const int_limit = limit !== undefined ? parseInt(limit) : undefined;
@@ -43,17 +48,17 @@ const startServer = async () => {
     }
   });
 
-  app.get("/headers/hash/:hash", headerValidator, (req, res) => {
+  clientRouter.get("/headers/hash/:hash", headerValidator, (req, res) => {
     const header = res.locals.header as Header;
     res.json({ header, headerHash: header.hash.toHex() });
   });
 
-  app.get("/headers/blockNumber/:blockNumber", headerValidator, (req, res) => {
+  clientRouter.get("/headers/blockNumber/:blockNumber", headerValidator, (req, res) => {
     const header = res.locals.header as Header;
     return res.json({ header, headerHash: header.hash.toHex() });
   });
 
-  app.get("/headers/hash/:hash/proof", headerValidator, (req, res) => {
+  clientRouter.get("/headers/hash/:hash/proof", headerValidator, (req, res) => {
     const header = res.locals.header as Header;
 
     try {
@@ -71,7 +76,7 @@ const startServer = async () => {
     }
   });
 
-  app.get(
+  clientRouter.get(
     "/headers/blockNumber/:blockNumber/proof",
     headerValidator,
     (req, res) => {
@@ -93,7 +98,7 @@ const startServer = async () => {
     }
   );
 
-  app.post("/validateProof", (req: ValidateProofRequest, res) => {
+  clientRouter.post("/validateProof", (req: ValidateProofRequest, res) => {
     const { identifierType, proof } = req.body;
 
     if (!proof) {
@@ -119,6 +124,9 @@ const startServer = async () => {
     const isValid = lightClient.validateProof(header, proof);
     res.json({ isValid });
   });
+
+    // Mount the router on /client path
+    app.use('/client', clientRouter);
 
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
