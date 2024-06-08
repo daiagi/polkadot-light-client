@@ -19,7 +19,7 @@ npm run start
 the local server will start at http://localhost:3000
 
 ## How to Use
-[Live Playground](http://ecs-in-appli-f1p8uieyfw1v-94977798.ap-southeast-1.elb.amazonaws.com/api-docs/)
+[Live Playground](http://ecs-in-appli-f1p8uieyfw1v-94977798.ap-southeast-1.elb.amazonaws.com/client/api-docs/)
 
 The client provides a simple REST API to interact with the Polkadot network. The following endpoints are available:
 
