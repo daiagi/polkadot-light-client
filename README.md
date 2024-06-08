@@ -23,13 +23,13 @@ the local server will start at http://localhost:3000
 
 The client provides a simple REST API to interact with the Polkadot network. The following endpoints are available:
 
-- GET `/headers/?limit` Get latest block header, optionally with a limit
-- GET `/headers/blockNumber/:blockNumber` Get block header by block number
-- GET `/headers/hash/:hash` Get block header by header hash
-- GET `/headers/blockNumber/:blockNumber/proof` Get Merkle inclusion proof for block header by block number
-- GET `/headers/hash/:hash/proof` Get Merkle inclusion proof for block header by block hash
+- GET `/client/headers/?limit` Get latest block header, optionally with a limit
+- GET `/client/headers/blockNumber/:blockNumber` Get block header by block number
+- GET `/client/headers/hash/:hash` Get block header by header hash
+- GET `/client/headers/blockNumber/:blockNumber/proof` Get Merkle inclusion proof for block header by block number
+- GET `/client/headers/hash/:hash/proof` Get Merkle inclusion proof for block header by block hash
 
-- POST `/validateProof` Verify Merkle inclusion proof for block header
+- POST `/client/validateProof` Verify Merkle inclusion proof for block header
 
 * POST request body example:
 ```json
